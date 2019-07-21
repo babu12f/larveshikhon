@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePeopleTable extends Migration
+class DropBodyFromPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreatePeopleTable extends Migration
      */
     public function up()
     {
-        Schema::create('people', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 50);
-            $table->string('email', 100);
-            $table->string('address', 300);
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('body');
         });
     }
 
@@ -29,6 +25,8 @@ class CreatePeopleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('people');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->text('body');
+        });
     }
 }

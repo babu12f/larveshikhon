@@ -10,7 +10,7 @@ class PersonsController extends Controller
 {
     public function index()
     {
-        $person_list = Person::all(); // select * form people;
+        $person_list = Person::all(); //select * form people;
 
         return view('personlist', compact('person_list'));
     }
