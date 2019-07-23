@@ -1,3 +1,5 @@
 <?php
 
-Route::get('/', 'PersonsController@index');
+Route::get('/', function(){
+    return view('welcome');
+});
