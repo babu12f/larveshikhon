@@ -10,9 +10,29 @@
 <body>
     <div class="container">
         <h1> {{ $country->name }} Detail</h1>
-        
         <h2> {{ $country->capital }} </h2>
 
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    @foreach ($country->persons as $person)
+                        <tr>
+                            <td>{{$person->id}}</td>
+                            <td>{{$person->name}}</td>
+                            <td>{{$person->email}}</td>
+                            <td>{{$person->phone}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
         
     </div>

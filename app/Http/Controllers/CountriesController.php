@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Country;
+use App\Person;
 
 class CountriesController extends Controller
 {
@@ -70,8 +71,44 @@ class CountriesController extends Controller
         return view('country.detail', compact('country'));
     }
 
-    public function edit(Country $country) //Route model binding
+    public function edit($id) //Route model binding
     {
+        $country = Country::find($id);
+
         return view('country.edit', compact('country'));
+    }
+
+    public function update($id)
+    {
+        $country = Country::find($id);
+
+        $name = request('name');
+        $capital = request('capital');
+        $currency = request('currency');
+        $population = request('population');
+
+        // $country->name = $name;
+        // $country->capital = $capital;
+        // $country->currency = $currency;
+        // $country->population = $population;
+        // $country->save();
+
+        $country->update([
+            'name' => $name,
+            'capital' => $capital,
+            'currency' => $currency,
+            'population' => $population
+        ]);
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $country = Country::find($id);
+
+        $country->delete();
+
+        return back();
     }
 }

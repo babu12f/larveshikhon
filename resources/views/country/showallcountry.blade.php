@@ -39,7 +39,16 @@
                         <td>{{ $country->population }} </td>
                         <td>{{ $country->created_at->diffForHumans() }} </td>
                         <td>{{ $country->updated_at->format('Y - m - d')  }} </td>
-                        <td> <a href="/countries/{{$country->id}}/edit" class="btn btn-success btn-sm">Edit</a> | <a href="#" class="btn btn-danger btn-sm">Delete</a> </td>
+                        <td> 
+                            <a href="/countries/{{$country->id}}/edit" class="btn btn-success btn-sm">Edit</a> |
+
+                            <form action="/countries/{{$country->id}}/delete" method="POST">
+                                @csrf
+                                @method('delete')
+
+                                <button type="submit" class="btn btn-danger btn-sm" >Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
