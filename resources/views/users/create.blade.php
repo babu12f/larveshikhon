@@ -10,22 +10,63 @@
 <body>
     
     <div class="container">
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="/users/create" method="POST">
             @csrf
 
             <div class="form-group">
                 <label>First name</label>
-                <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                <input type="text" 
+                    class="form-control {{ $errors->has('firstname') ? ' is-invalid' : '' }}" 
+                    name="firstname" 
+                    value="{{ old('firstname') }}"
+                    placeholder="First Name">
+                
+                @if ($errors->has('firstname'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('firstname') }}</strong>
+                    </span>
+                @endif
             </div>
 
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                <input type="text" 
+                    class="form-control {{ $errors->has('lastname') ? ' is-invalid' : '' }}" 
+                    name="lastname" 
+                    value="{{ old('lastname') }}"
+                    placeholder="Last Name">
+
+                @if ($errors->has('lastname'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('lastname') }}</strong>
+                    </span>
+                @endif
             </div>
             
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" name="email" placeholder="Email">
+                <input type="text" 
+                    class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                    name="email" 
+                    value="{{ old('email') }}"
+                    placeholder="Email">
+
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
             </div>
 
             <div class="form-group">
@@ -35,7 +76,7 @@
 
             <div class="form-group">
                 <label>Date of Birst</label>
-                <input type="date" class="form-control" name="date_of_birth">
+                <input type="date" class="form-control" name="date_of_birth" placeholder="dd/mm/yyyy">
             </div>
 
             <div class="form-group">
@@ -43,22 +84,14 @@
                 <input type="text" class="form-control" name="user_name">
             </div>
 
-            <hr>
-            <h2>Profile information</h2>
-
             <div class="form-group">
-                <label>Profile Picture</label>
-                <input type="text" class="form-control" name="profile_pic" placeholder="Profile Pic">
+                <label>Password</label>
+                <input type="text" class="form-control" name="password">
             </div>
 
             <div class="form-group">
-                <label>Bio</label>
-                <input type="text" class="form-control" name="bio" placeholder="Bio">
-            </div>
-
-            <div class="form-group">
-                <label>Adress</label>
-                <input type="text" class="form-control" name="address" placeholder="Adress">
+                <label>Confirm Password</label>
+                <input type="text" class="form-control" name="password_confirmation">
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

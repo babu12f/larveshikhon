@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use App\Profile;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
     public function index()
     {
         return view('users.index', [
-            'users' => User::all()
+            'users' => User::paginate(1)
         ]);
     }
 
@@ -20,9 +21,33 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $user = User::create([
+        $rules = [
+            'firstname' => ['required', 'min:3', 'max:20'],
+            'lastname' => 'required|min:3|max:20',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|numeric',
+            'date_of_birth' => 'required|date',
+            'user_name' => 'required|alpha_num',
+            'password' => 'required|confirmed'
+        ];
+
+        $messages = [
+            'firstname.required' => 'Your have to provide Firstname :(',
+            'firstname.min' => 'You have to provide minimub 3 character !!'
+        ];
+
+        // request()->validate($rules, $messages);
+        // $request->validate($rules, $messages);
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
+        User::create([
             'firstname' => request('firstname'),
             'lastname' => request('lastname'),
             'email' => request('email'),
@@ -30,19 +55,6 @@ class UsersController extends Controller
             'date_of_birth' => request('date_of_birth'),
             'user_name' => request('user_name'),
         ]);
-
-        $user->profile()->create([
-            'profile_pic' => request('profile_pic'),
-            'bio' => request('bio'),
-            'address' => request('address'),
-        ]);
-
-        // Profile::create([
-        //     'profile_pic' => request('profile_pic'),
-        //     'bio' => request('bio'),
-        //     'address' => request('address'),
-        //     'owner_id' => $user->id
-        // ]);
 
         return redirect('/users');
     }
