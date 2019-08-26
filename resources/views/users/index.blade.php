@@ -32,7 +32,11 @@
                     <td> 
                         <a href="/users/{{$user->id}}/show">
                             show profile
+                        </a> |
+                        <a href="/users/{{$user->id}}/edit">
+                            edit
                         </a>
+
                     </td>
                 </tr>
             @endforeach
