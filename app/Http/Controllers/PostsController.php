@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
-use App\User;
+use App\Post;
 use Illuminate\Http\Request;
-use DB;
 
-class UsersController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('posts.index',[
+            'posts' => Post::all()
+        ]);
     }
 
     /**
@@ -26,7 +26,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('posts.create');
     }
 
     /**
@@ -37,25 +37,9 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function(){
-            $user = User::create([
-                'name' => request('name'),
-                'email' => 'user@a.com'
-            ]);
-            
-            $user->images()->create([
-                'path' => request('image_path')
-            ]);
-        }, 3);
+        Post::create(request()->except('_token'));
 
         return back();
-    }
-
-    public function images()
-    {
-        $image =  Image::find(1);
-
-        return $image->load('imageable');
     }
 
     /**
@@ -66,7 +50,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('posts.show', [
+            'post' => Post::find($id)
+        ]);
     }
 
     /**
@@ -77,7 +63,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return Post::with('comments')->find($id);
     }
 
     /**

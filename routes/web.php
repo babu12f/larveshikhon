@@ -14,3 +14,12 @@ Route::post('/users/create', 'UsersController@store');
 
 Route::get('/images', 'UsersController@images');
 
+Route::resource('videos', 'VideosController');
+
+Route::resource('posts', 'PostsController');
+
+Route::post('/videos/{id}/comments', 'CommentsController@videoComment');
+Route::post('/posts/{id}/comments', 'CommentsController@postComment');
+
+Route::get('/comments', 'CommentsController@index');
+

@@ -13,22 +13,20 @@ class FileUploaController extends Controller
 
     public function store()
     {
-        // for file validation use ==> 'mimes:doc,docx,pdf,jpeg,jpg,png,gif',...
-        // only for image validation ==> 'image'
-
-        request()->validate([
-            'user_img' => 'required|image|max:1000'
-        ]);
-
         if (request()->hasFile('user_img'))
         {
             $destinationPath = 'uploads';
 
-            $ext = request()->file('user_img')->getClientOriginalExtension();
+            $all_file = request()->file('user_img');
 
-            $file_name = uniqid().".".$ext;
+            foreach($all_file as $file)
+            {
+                $ext = $file->getClientOriginalExtension();
 
-            request()->file('user_img')->move($destinationPath, $file_name);
+                $file_name = uniqid().".".$ext;
+
+                $file->move($destinationPath, $file_name);
+            }
 
             return back();
         }

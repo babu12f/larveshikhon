@@ -21,7 +21,7 @@
     <form action="/fileup" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <input type="file" name="user_img">
+        <input type="file" name="user_img[]" multiple>
         
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>

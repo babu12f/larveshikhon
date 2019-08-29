@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
-use App\User;
+use App\Comment;
+use App\Post;
+use App\Video;
 use Illuminate\Http\Request;
-use DB;
 
-class UsersController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return view('comments.index', [
+            'comments' => Comment::all()
+        ]);
     }
 
     /**
@@ -26,7 +28,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        //
     }
 
     /**
@@ -37,26 +39,32 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function(){
-            $user = User::create([
-                'name' => request('name'),
-                'email' => 'user@a.com'
-            ]);
-            
-            $user->images()->create([
-                'path' => request('image_path')
-            ]);
-        }, 3);
+        //
+    }
+    
+    public function videoComment($id)
+    {
+        $video = Video::find($id);
+
+        $video->comments()->create([
+            'commnet_body' => request('comment_body')
+        ]);
+
+        return back();
+    }
+    
+    public function postComment($id)
+    {
+        $post = Post::find($id);
+
+        $post->comments()->create([
+            'commnet_body' => request('comment_body')
+        ]);
 
         return back();
     }
 
-    public function images()
-    {
-        $image =  Image::find(1);
 
-        return $image->load('imageable');
-    }
 
     /**
      * Display the specified resource.
