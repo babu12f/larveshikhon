@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Video;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class VideosController extends Controller
      */
     public function create()
     {
-        return view('videos.create');
+        return view('videos.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     /**
@@ -37,7 +40,13 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        Video::create(request()->except('_token'));
+        $tags = $request->tags;
+
+        $video = Video::create(request()->except('_token','tags'));
+
+        $tags = Tag::find($tags);
+        
+        $video->tags()->attach($tags);
 
         return back();
     }

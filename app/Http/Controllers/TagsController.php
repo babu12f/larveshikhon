@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Payments\MyPaymentGateWay;
-use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class TagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index',[
-            'posts' => Post::all()
+        return view('tags.index', [
+            'tags' => Tag::all()
         ]);
     }
 
@@ -27,7 +26,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('tags.create');
     }
 
     /**
@@ -36,45 +35,48 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        Post::create(request()->except('_token'));
+        $validated_data = $request->validate([
+            'name' => 'required',
+            'description' => ''
+        ]);
 
-        return back();
+        Tag::create($validated_data);
+
+        return redirect()->to('/tags')->with('success', 'Tag added successfully :)');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        return view('posts.show', [
-            'post' => Post::find($id)
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        // return Post::with('comments')->find($id);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
         //
     }
@@ -82,10 +84,10 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
         //
     }

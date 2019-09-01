@@ -18,6 +18,8 @@ Route::resource('videos', 'VideosController');
 
 Route::resource('posts', 'PostsController');
 
+Route::resource('tags', 'TagsController');
+
 Route::post('/videos/{id}/comments', 'CommentsController@videoComment');
 Route::post('/posts/{id}/comments', 'CommentsController@postComment');
 

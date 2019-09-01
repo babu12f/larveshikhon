@@ -23,6 +23,15 @@
                 <input id="video" type="text" class="form-control" name="file_path">
             </div>
 
+            <div class="form-group">
+                <label for="tags">Select tangs</label>
+                <select name="tags[]" class="form-control" multiple>
+                    @foreach ($tags as $tag)
+                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
