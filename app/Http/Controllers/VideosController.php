@@ -40,13 +40,15 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
+        // Form Value
         $tags = $request->tags;
 
         $video = Video::create(request()->except('_token','tags'));
 
-        $tags = Tag::find($tags);
-        
-        $video->tags()->attach($tags);
+        // Find tag in database to confirm tag
+        $tags_form_database = Tag::find($tags);
+
+        $video->tags()->attach($tags_form_database);
 
         return back();
     }
@@ -72,7 +74,12 @@ class VideosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $video = Video::find($id);
+
+        return view('videos.edit', [
+            'video' => $video,
+            'tags' => Tag::all()
+        ]);
     }
 
     /**
@@ -84,7 +91,28 @@ class VideosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'Url' => 'required|min:5'
+        ]);
+
+        // Form Value
+        $tags = $request->tags;
+
+        // current original data from database
+        $video = Video::find($id);
+
+        $video->update(request()->except('_token','tags'));
+
+        // Find tag in database to confirm tag
+        $tags_form_database = Tag::find($tags);
+
+        // $video->tags()->detach($video->tags);
+
+        // $video->tags()->attach($tags_form_database);
+
+        $video->tags()->sync($tags_form_database);
+
+        return back();
     }
 
     /**

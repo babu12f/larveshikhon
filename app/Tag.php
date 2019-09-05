@@ -17,4 +17,9 @@ class Tag extends Model
     {
         return $this->morphedByMany('App\Post', 'taggable');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }

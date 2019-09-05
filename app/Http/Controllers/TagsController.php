@@ -53,9 +53,13 @@ class TagsController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag) // select * from tags where name = '{$tagname}'
     {
-        //
+        // select * from tags where name = '{$tagname}'
+        // $tag = Tag::where('name', $tagname)->first();
+        // $tag = Tag::whereName($tagname)->first();
+
+        return view('tags.show', compact('tag'));
     }
 
     /**
