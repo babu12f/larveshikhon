@@ -10,6 +10,10 @@
 <body>
     <div class="container">
         <h1>Video List</h1>
+        <p>{{ request()->session()->get('user_name') }}</p>
+        <p>{{ session()->get('user_name', "this is the value") }}</p>
+        <p>{{ session()->exists('user_name') ? 'yer' : 'no' }} </p>
+        <p>{{ session()->has('user_name') ? 'yer' : 'no' }} </p>
 
         <table class="table">
             <tr>

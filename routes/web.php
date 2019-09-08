@@ -25,3 +25,6 @@ Route::post('/posts/{id}/comments', 'CommentsController@postComment');
 
 Route::get('/comments', 'CommentsController@index');
 
+Route::get('/login', 'LoginController@create');
+Route::post('/login', 'LoginController@store');
+

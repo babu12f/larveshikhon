@@ -16,12 +16,11 @@
 
             <div class="form-group">
                 <label for="url">Url</label>
-                <input id="url" type="text" class="form-control" name="Url" value="@php 
-                                                                                    if (!empty(old('Url')))
-                                                                                        echo old('Url');
-                                                                                    else 
-                                                                                        echo $video->url;
-                                                                                @endphp">
+                <input id="url" 
+                    type="text" 
+                    class="form-control" 
+                    name="Url" 
+                    value="{{ !empty(old('Url')) ? old('Url') : $video->url }}">
             </div>
 
             <div class="form-group">
@@ -31,11 +30,23 @@
 
             <div class="form-group">
                 <label for="tags">Select tangs</label>
-                <select name="tags[]" class="form-control" multiple>
+                {{--<select name="tags[]" class="form-control" multiple>
                     @foreach ($tags as $tag)
-                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                        <option value="{{$tag->id}}"
+                             {{ $selected_tag->contains($tag->id) ? 'selected' : '' }}
+                             >
+                             {{$tag->name}}</option>
                     @endforeach
-                </select>
+                </select>--}}
+                @foreach ($tags as $tag)
+                    <input 
+                    class="form-control" 
+                    type="checkbox" 
+                    value="{{$tag->id}}" 
+                    name="tags[]"
+                    {{ $selected_tag->contains($tag->id) ? 'checked' : '' }}
+                    > {{$tag->name}}
+                @endforeach
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
