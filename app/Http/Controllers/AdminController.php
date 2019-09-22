@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Video;
 use Illuminate\Http\Request;
 
-class VideosController extends Controller
+class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +13,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        return "video index";
+        return "admin index";
     }
 
     /**
@@ -29,7 +23,7 @@ class VideosController extends Controller
      */
     public function create()
     {
-        return view('videos.create');
+        //
     }
 
     /**
@@ -40,14 +34,7 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
-
-        Video::create([
-            'title' => request('title'),
-            'user_id' => auth()->id()
-        ]);
-
-        return back();
+        //
     }
 
     /**
