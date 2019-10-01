@@ -9,17 +9,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create New post</div>
+                <div class="card-header">Edit Post</div>
 
                 <div class="card-body">
-                    <form action="/posts" method="POST">
+                    <form action="/posts/{{$post->id}}/edit" method="POST">
                         @csrf
+                        @method('put')
 
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input id="title" type="text" 
                                 class="form-control @error('title') is-invalid @enderror" 
                                 name="title" 
+                                value="{{$post->title}}"
                                 placeholder="Post Title">
                             
                             @error('title')
@@ -34,36 +36,37 @@
                             <select id="category" type="text" 
                                 class="form-control @error('category') is-invalid @enderror" 
                                 name="category_id" 
+                                value="{{$post->title}}"
                                 placeholder="Post category">
 
                                 <option>Select Category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->id}}" {{ in_array($category->id, $post->tags->pluck('id'))? 'selected' : '' }} >{{$category->name}}</option>
+                                    <option value="{{$category->id}}" {{ $post->category_id == $category->id ? 'selected': '' }}>{{$category->name}}</option>
                                 @endforeach
                             </select>
+
+                            <div class="form-group">
+                                <label for="tag_id">Post Tags</label>
+                                <select id="tag_id" type="text" 
+                                    class="form-control @error('tag_id') is-invalid @enderror" 
+                                    name="tag_id[]" 
+                                    placeholder="Post category"
+                                    multiple>
+    
+                                    <option>Select Tags</option>
+                                    @foreach ($tags as $tag)
+                                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                    @endforeach
+                                </select>
+                                
+                                @error('tag_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             
                             @error('category_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="tag_id">Post Tags</label>
-                            <select id="tag_id" type="text" 
-                                class="form-control @error('tag_id') is-invalid @enderror" 
-                                name="tag_id[]" 
-                                placeholder="Post category"
-                                multiple>
-
-                                <option>Select Tags</option>
-                                @foreach ($tags as $tag)
-                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
-                                @endforeach
-                            </select>
-                            
-                            @error('tag_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -75,7 +78,7 @@
                             <textarea id="body" 
                                 class="form-control @error('body') is-invalid @enderror" 
                                 name="body" 
-                                placeholder="body" rows="7"></textarea>
+                                placeholder="body" rows="7">{{$post->title}}</textarea>
                         
                             @error('body')
                                 <span class="invalid-feedback" role="alert">
@@ -84,7 +87,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

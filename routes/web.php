@@ -11,14 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 
 Route::post('/categories', 'CategoriesController@store');
 
@@ -30,9 +27,22 @@ Route::get('/categories/{category}/edit', 'CategoriesController@edit');
 
 Route::put('/categories/{category}/edit', 'CategoriesController@update');
 
-Route::get('/posts/create', 'PostsController@create');
+Route::post('/tags', 'TagsController@store');
+
+Route::get('/tags', 'TagsController@index');
+
+Route::get('/tags/create', 'TagsController@create');
+
+Route::get('/tags/{tag}/edit', 'TagsController@edit');
+
+Route::put('/tags/{tag}/edit', 'TagsController@update');
 
 Route::get('/posts', 'PostsController@index');
 
 Route::post('/posts', 'PostsController@store');
 
+Route::get('/posts/create', 'PostsController@create');
+
+Route::get('/posts/{post}/edit', 'PostsController@edit');
+
+Route::put('/posts/{post}/edit', 'PostsController@update');

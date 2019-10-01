@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -28,9 +29,11 @@ class PostsController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
         return view('posts.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -45,10 +48,17 @@ class PostsController extends Controller
         $validated_data = request()->validate([
             'title' => 'required|min:5|max:300',
             'body' => 'required|min:10',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'tag_id' => 'exists:tags,id'
         ]);
 
-        Post::create($validated_data);
+        $tags_ids = request('tag_id');
+
+        $tags = Tag::find($tags_ids);
+
+        $post = Post::create(request()->except('_token', 'tag_id'));
+
+        $post->tags()->attach($tags);
 
         return redirect('/posts')->with('success', 'Post Created Successfully');
     }
@@ -70,9 +80,16 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.edit',[
+            'categories' => $categories,
+            'tags' => $tags,
+            'post' => $post
+        ]);
     }
 
     /**
@@ -82,9 +99,24 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Post $post)
     {
-        //
+        request()->validate([
+            'title' => 'required|min:5|max:300',
+            'body' => 'required|min:10',
+            'category_id' => 'required|exists:categories,id',
+            'tag_id' => 'exists:tags,id'
+        ]);
+
+        $tags_ids = request('tag_id');
+
+        $tags = Tag::find($tags_ids);
+
+        $post->update(request()->except('_token', 'tag_id'));
+
+        $post->tags()->sync($tags);
+
+        return redirect('/posts')->with('success', 'Post Updated Successfully');
     }
 
     /**
@@ -95,6 +127,5 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }
