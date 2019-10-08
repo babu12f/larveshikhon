@@ -6,15 +6,22 @@
 
     <div class="row justify-content-center">
         <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">Post List</div>
 
-                <div class="card-body">
-                    @foreach ($posts as $post)
-                        <h3>{{$post->title}}</h3>
-                    @endforeach
+            @foreach ($posts as $post)
+                <div class="card mb-4">
+                    <div class="card-header">
+                        @if($post->thumbnail)
+                            <img src="{{$post->thumbnail_path()}}" alt="thumbnail" class="rounded-circle" 
+                            style="float:left; margin-right:15px;" width="50">
+                        @endif
+                        <a href="posts/{{$post->id}}"><h3>{{$post->title}}</h3></a>
+                    </div>
+
+                    <div class="card-body">
+                       {{$post->body}}
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
         
         <div class="col-md-3">

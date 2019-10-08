@@ -49,7 +49,8 @@ class PostsController extends Controller
             'title' => 'required|min:5|max:300',
             'body' => 'required|min:10',
             'category_id' => 'required|exists:categories,id',
-            'tag_id' => 'exists:tags,id'
+            'tag_id' => 'exists:tags,id',
+            'thumbnail' => 'image'
         ]);
 
         $tags_ids = request('tag_id');
@@ -57,6 +58,17 @@ class PostsController extends Controller
         $tags = Tag::find($tags_ids);
 
         $post = Post::create(request()->except('_token', 'tag_id'));
+
+        if(request()->hasFile('thumbnail'))
+        {
+            $ext = request()->file('thumbnail')->getClientOriginalExtension();
+            $file_name = $post->id . '.' . $ext;
+            request()->file('thumbnail')->move('uploads/posts', $file_name);
+
+            $post->update([
+                'thumbnail' => $file_name
+            ]);
+        }
 
         $post->tags()->attach($tags);
 
@@ -105,7 +117,8 @@ class PostsController extends Controller
             'title' => 'required|min:5|max:300',
             'body' => 'required|min:10',
             'category_id' => 'required|exists:categories,id',
-            'tag_id' => 'exists:tags,id'
+            'tag_id' => 'exists:tags,id',
+            'thumbnail' => 'image'
         ]);
 
         $tags_ids = request('tag_id');
@@ -113,6 +126,24 @@ class PostsController extends Controller
         $tags = Tag::find($tags_ids);
 
         $post->update(request()->except('_token', 'tag_id'));
+
+        if(request()->hasFile('thumbnail'))
+        {
+            // if user provide new file delete old one
+            if(\File::exists("uploads/posts/$post->thumbnail"))
+            {
+                \File::delete("uploads/posts/$post->thumbnail");
+            }
+
+            // upload new file
+            $ext = request()->file('thumbnail')->getClientOriginalExtension();
+            $file_name = $post->id . '.' . $ext;
+            request()->file('thumbnail')->move('uploads/posts', $file_name);
+
+            $post->update([
+                'thumbnail' => $file_name
+            ]);
+        }
 
         $post->tags()->sync($tags);
 
