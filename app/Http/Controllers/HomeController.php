@@ -35,8 +35,11 @@ class HomeController extends Controller
 
     public function show(Post $post)
     {
+        $categories = Category::all();
+
         return view('home.show', [
-            'post' => $post
+            'post' => $post,
+            'categories' => $categories
         ]);
     }
 }

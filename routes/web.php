@@ -43,9 +43,13 @@ Route::post('/posts', 'PostsController@store');
 
 Route::get('/posts/{post}', 'HomeController@show');
 
-Route::post('/posts/{post}/comments', 'CommentsController@store');
+Route::post('/posts/{post}/comments', 'CommentsController@store')->middleware('auth');
 
-Route::get('/posts/{post}/liked', 'CommentsController@storeLike');
+Route::get('/posts/{category}/category', 'SearchController@searchPostByCategory');
+
+Route::get('/posts/{post}/liked', 'CommentsController@storeLike')->middleware('auth');
+
+Route::get('/comments/{comment}/liked', 'CommentsController@storeCommentLike')->middleware('auth');
 
 Route::get('/posts/create', 'PostsController@create');
 

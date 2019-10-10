@@ -21,6 +21,7 @@
 
                 <div class="card-footer ">
                     {{$post->likes->count()}} People Like This Post
+
                     <a href="/posts/{{$post->id}}/liked" 
                         class="btn btn-sm {{ $post->likeByCurrentUser() ?  "btn-danger" :  "btn-success" }}">
                         {{ $post->likeByCurrentUser() ?  "Dislike" :  "Like" }}</a>
@@ -56,7 +57,12 @@
             
             @foreach ($post->comments as $comment)
                 <div class="card mb-2">
-                    <div class="card-header">{{$comment->owner->name}} said</div>
+                    <div class="card-header">{{$comment->owner->name}} said  
+                        <a href="/comments/{{$comment->id}}/liked" 
+                            class="btn btn-sm btn-success pull-right {{ $comment->likeByCurrentUser() ?  "btn-danger" :  "btn-success" }} "> 
+                            {{$comment->likes()->count()}} <i class="fa fa-heart"></i> 
+                        </a> 
+                    </div>
                     <div class="card-body">
                             {{$comment->body}}
                     </div>
@@ -70,6 +76,13 @@
                 <div class="card-header">Category</div>
 
                 <div class="card-body">
+                    <ul class="list-group">
+                        @foreach ($categories as $category)
+                            <li class="list-group-item">
+                                <a href="/posts/{{$category->id}}/category">{{$category->name}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

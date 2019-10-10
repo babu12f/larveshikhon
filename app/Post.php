@@ -30,6 +30,6 @@ class Post extends Model
 
     public function likeByCurrentUser()
     {
-        return $this->likes()->where('user_id', 1)->exists();
+        return $this->likes()->where('user_id', auth()->id())->exists();
     }
 }
