@@ -37,9 +37,11 @@ Route::get('/tags/{tag}/edit', 'TagsController@edit');
 
 Route::put('/tags/{tag}/edit', 'TagsController@update');
 
-Route::get('/posts', 'PostsController@index');
+Route::get('/posts', 'PostsController@index')->middleware('admin');
 
-Route::post('/posts', 'PostsController@store');
+Route::get('/posts/create', 'PostsController@create')->middleware('admin');
+
+Route::post('/posts', 'PostsController@store')->middleware('admin');
 
 Route::get('/posts/{post}', 'HomeController@show');
 
@@ -47,12 +49,14 @@ Route::post('/posts/{post}/comments', 'CommentsController@store')->middleware('a
 
 Route::get('/posts/{category}/category', 'SearchController@searchPostByCategory');
 
+Route::get('/posts/{tag}/tag', 'SearchController@searchPostByTag')->name('search.tag');
+
 Route::get('/posts/{post}/liked', 'CommentsController@storeLike')->middleware('auth');
 
 Route::get('/comments/{comment}/liked', 'CommentsController@storeCommentLike')->middleware('auth');
 
-Route::get('/posts/create', 'PostsController@create');
+Route::get('/posts/{post}/edit', 'PostsController@edit')->middleware('admin');
 
-Route::get('/posts/{post}/edit', 'PostsController@edit');
+Route::put('/posts/{post}/edit', 'PostsController@update')->middleware('admin');
 
-Route::put('/posts/{post}/edit', 'PostsController@update');
+Route::get('/posts/{post}/approve', 'PostsController@approve')->middleware('admin');

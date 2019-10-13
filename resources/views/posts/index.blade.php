@@ -27,7 +27,8 @@
                                 <td>JOhn doe</td>
                                 <td>
                                     <a href="/posts/{{$post->id}}/edit" class="btn btn-warning btn-sm">Edit</a> |
-                                    <a href="/posts/{{$post->id}}/detete" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/posts/{{$post->id}}/detete" class="btn btn-danger btn-sm">Delete</a> |
+                                    <a href="/posts/{{$post->id}}/approve" class="btn btn-success btn-sm">Approve</a>
                                 </td>
                             </tr>
                         @endforeach

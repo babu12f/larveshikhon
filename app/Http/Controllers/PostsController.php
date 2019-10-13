@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('admin')->only(['index', 'create']);
+        // $this->middleware('admin')->except(['index', 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -148,6 +154,15 @@ class PostsController extends Controller
         $post->tags()->sync($tags);
 
         return redirect('/posts')->with('success', 'Post Updated Successfully');
+    }
+
+    public function approve(Post $post)
+    {
+        $post->update([
+            'status' => 1
+        ]);
+
+        return back()->with('success', 'The Post Approved Successfully');
     }
 
     /**

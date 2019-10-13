@@ -25,6 +25,16 @@
                     <a href="/posts/{{$post->id}}/liked" 
                         class="btn btn-sm {{ $post->likeByCurrentUser() ?  "btn-danger" :  "btn-success" }}">
                         {{ $post->likeByCurrentUser() ?  "Dislike" :  "Like" }}</a>
+                    
+                    <div class="pull-right">
+                        @foreach ($post->tags as $tag)
+                            @if ($loop->last)
+                                <a href="{{ route('search.tag', ['tag' => $tag->id]) }}">{{$tag->name}}</a>
+                            @else
+                                <a href="{{ route('search.tag', ['tag' => $tag->id]) }}">{{$tag->name}}</a>,
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
 

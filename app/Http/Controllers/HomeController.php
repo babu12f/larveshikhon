@@ -24,22 +24,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(20);
-        $categories = Category::all();
+        $posts = Post::where('status', 1)->paginate(20);
 
         return view('home.index', [
             'posts' => $posts,
-            'categories' => $categories
         ]);
     }
 
     public function show(Post $post)
     {
-        $categories = Category::all();
+        if(auth()->check())
+        {
+            if(!$post->status && auth()->user()->user_type !='admin') return back();
+        }
+        else
+        {
+            if(!$post->status ) return back();
+        }
 
         return view('home.show', [
             'post' => $post,
-            'categories' => $categories
         ]);
     }
 }
