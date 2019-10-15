@@ -13,6 +13,12 @@
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/profile', 'ProfileController@profile');
+
+Route::get('/profile/edit', 'ProfileController@edit');
+
+Route::post('/profile/edit', 'ProfileController@update');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
