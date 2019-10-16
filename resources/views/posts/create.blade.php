@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Create New post</div>
 
@@ -87,6 +87,7 @@
                         <div class="form-group">
                             <label for="body">Body</label>
                             <textarea id="body" 
+                                id="body"
                                 class="form-control @error('body') is-invalid @enderror" 
                                 name="body" 
                                 placeholder="body" rows="7"></textarea>
@@ -114,5 +115,9 @@
         $(function() {
             $('#tag_id').select2();
         });
+    </script>
+
+    <script>
+        CKEDITOR.replace( 'body' );
     </script>
 @endsection

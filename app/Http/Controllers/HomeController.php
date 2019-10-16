@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Post;
+use App\Category;
+use PDF;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -45,5 +46,15 @@ class HomeController extends Controller
         return view('home.show', [
             'post' => $post,
         ]);
+    }
+
+    public function genReport()
+    {
+        $cat = Category::all();
+
+        $pdf = PDF::loadView('invoice', [
+            'cat'=>$cat
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }

@@ -159,7 +159,7 @@ class PostsController extends Controller
     public function approve(Post $post)
     {
         $post->update([
-            'status' => 1
+            'status' => ($post->status == 1) ? 0 : 1
         ]);
 
         return back()->with('success', 'The Post Approved Successfully');

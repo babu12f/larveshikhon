@@ -16,7 +16,7 @@
                     <p>Email : {{$user->email}}</p>
                     <p>Last Login : 
                         @if($user->last_login)
-                            {{ $user->last_login->diffForHumans() }}
+                            {{ $user->last_login->format('d-m-Y') }}
                         @else
                             {{ "No History Found"}}
                         @endif

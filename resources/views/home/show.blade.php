@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="card-body">
-                    {{$post->body}}
+                    {!! $post->body !!}
                 </div>
 
                 <div class="card-footer ">
@@ -74,7 +74,7 @@
                         </a> 
                     </div>
                     <div class="card-body">
-                            {{$comment->body}}
+                            {{ $comment->body }}
                     </div>
                 </div>
             @endforeach

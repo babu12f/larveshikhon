@@ -28,7 +28,10 @@
                                 <td>
                                     <a href="/posts/{{$post->id}}/edit" class="btn btn-warning btn-sm">Edit</a> |
                                     <a href="/posts/{{$post->id}}/detete" class="btn btn-danger btn-sm">Delete</a> |
-                                    <a href="/posts/{{$post->id}}/approve" class="btn btn-success btn-sm">Approve</a>
+                                    <a href="/posts/{{$post->id}}/approve" 
+                                        class="btn {{ ($post->status == 1)? 'btn-danger' : 'btn-success' }}  btn-sm">
+                                        {{ ($post->status == 1)? 'Unapprove' : 'Approve' }}
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

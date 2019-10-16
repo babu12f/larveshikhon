@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/pdf', 'HomeController@genReport');
 
 Route::get('/profile', 'ProfileController@profile');
 
@@ -66,3 +67,5 @@ Route::get('/posts/{post}/edit', 'PostsController@edit')->middleware('admin');
 Route::put('/posts/{post}/edit', 'PostsController@update')->middleware('admin');
 
 Route::get('/posts/{post}/approve', 'PostsController@approve')->middleware('admin');
+
+Route::get('/users', 'UsersController@index')->middleware('admin');
