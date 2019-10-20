@@ -69,3 +69,7 @@ Route::put('/posts/{post}/edit', 'PostsController@update')->middleware('admin');
 Route::get('/posts/{post}/approve', 'PostsController@approve')->middleware('admin');
 
 Route::get('/users', 'UsersController@index')->middleware('admin');
+
+// Route::get('/countries/all', 'CountriesController@all');
+
+Route::resource('countries', 'CountriesController');
