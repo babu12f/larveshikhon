@@ -94,7 +94,11 @@ class CountriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $country = Country::find($id);
+
+        $country->update(request()->except('id'));
+
+        return ['status' => true, 'message'=>'Update Data Successfull', 'data'=> $country];
     }
 
     /**
@@ -105,6 +109,10 @@ class CountriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $country = Country::find($id);
+
+        $country->delete();
+
+        return ['status' => true, 'message'=>'Delete Data Successfull'];
     }
 }
