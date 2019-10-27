@@ -70,7 +70,7 @@
                     <div class="card-header">{{$comment->owner->name}} said  
                         <a href="/comments/{{$comment->id}}/liked" 
                             class="btn btn-sm btn-success pull-right {{ $comment->likeByCurrentUser() ?  "btn-danger" :  "btn-success" }} "> 
-                            {{$comment->likes()->count()}} <i class="fa fa-heart"></i> 
+                            {{$comment->likes->count()}} <i class="fa fa-heart"></i> 
                         </a> 
                     </div>
                     <div class="card-body">

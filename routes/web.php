@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/pdf', 'HomeController@genReport');
+Route::get('/qu', 'HomeController@query');
+Route::get('/mail', 'HomeController@mail');
 
 Route::get('/profile', 'ProfileController@profile');
 

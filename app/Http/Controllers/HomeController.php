@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Comment;
+use App\Mail\ConfirmOrder;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -43,6 +46,8 @@ class HomeController extends Controller
             if(!$post->status ) return back();
         }
 
+        $post->load(['comments', 'comments.likes', 'comments.owner']);
+
         return view('home.show', [
             'post' => $post,
         ]);
@@ -56,5 +61,17 @@ class HomeController extends Controller
             'cat'=>$cat
         ]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function query()
+    {
+        $users = Comment::inRandomOrder()->get()->take(3);
+
+        return $users;
+    }
+
+    public function mail()
+    {
+        return (new ConfirmOrder())->render();
     }
 }
